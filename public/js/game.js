@@ -16,3 +16,16 @@ document.querySelectorAll('.choice-button').forEach(button => {
             `勝ち数：${data.win_count}｜試行回数：${data.total_count}`;
     });
 });
+
+document.getElementById('reset-button').addEventListener('click', async () => {
+    const res = await fetch('/reset', {
+        method: 'POST',
+        headers: {
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+    });
+
+    const data = await res.json();
+    document.getElementById('score').innerText = '勝ち数：0｜試行回数：0';
+    document.getElementById('result').innerText = 'リセットしました';
+});
